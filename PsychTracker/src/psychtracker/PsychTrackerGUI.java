@@ -5,6 +5,9 @@
  */
 package psychtracker;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
@@ -17,13 +20,14 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     protected void SetUpNormalUserScenario() {
         this.PsychTrackerTabs.remove(this.LoginTab);
         this.PsychTrackerTabs.remove(this.SignUpTab);
-        this.PsychTrackerTabs.addTab("Client", new ImageIcon(this.getClass().getResource("/Res/SearchImg.png")), this.ClientTab);
+        this.PsychTrackerTabs.addTab("Client", new ImageIcon(this.getClass().getResource("/Res/ClientImg.png")), this.ClientTab);
     }
-    /**
-     * Creates new form PsychGUI
-     */
+    
+
     public PsychTrackerGUI() {
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Res/brainstorm.png")));
+        this.setExtendedState(this.MAXIMIZED_BOTH);
     }
 
     /**
@@ -47,11 +51,12 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         addClientButton = new javax.swing.JButton();
         FiguresPanel = new javax.swing.JPanel();
         LoginTab = new javax.swing.JPanel();
-        PasswordText = new javax.swing.JLabel();
-        UsernameText = new javax.swing.JLabel();
-        passwordfield = new javax.swing.JPasswordField();
-        usernamefield = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
         LoginButton = new javax.swing.JButton();
+        PasswordText = new javax.swing.JLabel();
+        passwordfield = new javax.swing.JPasswordField();
+        UsernameText = new javax.swing.JLabel();
+        usernamefield = new javax.swing.JTextField();
         LionStudyLoginText = new javax.swing.JLabel();
         SignUpTab = new javax.swing.JPanel();
         SignUpPanel = new javax.swing.JPanel();
@@ -65,6 +70,8 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         LionStudySignUpLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("PsychTracker");
+        setMaximumSize(null);
 
         TopPanel.setBackground(new java.awt.Color(6, 6, 50));
         TopPanel.setForeground(new java.awt.Color(255, 255, 255));
@@ -73,7 +80,9 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
 
         LionStudyText.setFont(new java.awt.Font("Arabic Typesetting", 0, 48)); // NOI18N
         LionStudyText.setForeground(new java.awt.Color(244, 244, 238));
+        LionStudyText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LionStudyText.setText("PsychTracker");
+        LionStudyText.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         pennstatelogolabel.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -82,7 +91,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         TopPanelLayout.setHorizontalGroup(
             TopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TopPanelLayout.createSequentialGroup()
-                .addGap(266, 266, 266)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(LionStudyText)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(LionStudyImage)
@@ -134,7 +143,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                         .addGap(34, 34, 34)
                         .addComponent(addClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(clientLabel))
-                .addContainerGap(328, Short.MAX_VALUE))
+                .addContainerGap(333, Short.MAX_VALUE))
         );
         clientPanelLayout.setVerticalGroup(
             clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,98 +163,94 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         FiguresPanel.setLayout(FiguresPanelLayout);
         FiguresPanelLayout.setHorizontalGroup(
             FiguresPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 783, Short.MAX_VALUE)
+            .addGap(0, 788, Short.MAX_VALUE)
         );
         FiguresPanelLayout.setVerticalGroup(
             FiguresPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 364, Short.MAX_VALUE)
+            .addGap(0, 378, Short.MAX_VALUE)
         );
 
         ClientTab.add(FiguresPanel, java.awt.BorderLayout.CENTER);
 
-        PsychTrackerTabs.addTab("Client", new javax.swing.ImageIcon(getClass().getResource("/Res/SearchImg.png")), ClientTab); // NOI18N
+        PsychTrackerTabs.addTab("Client", new javax.swing.ImageIcon(getClass().getResource("/Res/ClientImg.png")), ClientTab); // NOI18N
 
+        LoginButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        LoginButton.setText("Login");
+
+        PasswordText.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         PasswordText.setText("Password:");
 
+        UsernameText.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         UsernameText.setText("Username:");
 
-        passwordfield.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                passwordfieldKeyPressed(evt);
-            }
-        });
+        LionStudyLoginText.setFont(new java.awt.Font("Verdana", 1, 28)); // NOI18N
+        LionStudyLoginText.setText("PsychTracker Login");
 
-        usernamefield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernamefieldActionPerformed(evt);
-            }
-        });
-        usernamefield.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                usernamefieldKeyPressed(evt);
-            }
-        });
-
-        LoginButton.setText("Login");
-        LoginButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginButtonActionPerformed(evt);
-            }
-        });
-        LoginButton.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                LoginButtonKeyPressed(evt);
-            }
-        });
-
-        LionStudyLoginText.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        LionStudyLoginText.setText("LionStudy Login");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(169, 169, 169)
+                .addComponent(LionStudyLoginText)
+                .addContainerGap(124, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(PasswordText)
+                            .addComponent(UsernameText))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(usernamefield)
+                            .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(175, 175, 175))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(236, 236, 236))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(LionStudyLoginText)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(usernamefield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(UsernameText))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PasswordText)
+                    .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(129, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout LoginTabLayout = new javax.swing.GroupLayout(LoginTab);
         LoginTab.setLayout(LoginTabLayout);
         LoginTabLayout.setHorizontalGroup(
             LoginTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginTabLayout.createSequentialGroup()
-                .addGroup(LoginTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(LoginTabLayout.createSequentialGroup()
-                        .addGap(246, 246, 246)
-                        .addComponent(LionStudyLoginText))
-                    .addGroup(LoginTabLayout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addGroup(LoginTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(UsernameText)
-                            .addComponent(PasswordText))
-                        .addGap(18, 18, 18)
-                        .addGroup(LoginTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(usernamefield, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(LoginTabLayout.createSequentialGroup()
-                        .addGap(295, 295, 295)
-                        .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(322, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         LoginTabLayout.setVerticalGroup(
             LoginTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginTabLayout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addComponent(LionStudyLoginText, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addGroup(LoginTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(UsernameText)
-                    .addComponent(usernamefield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(LoginTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PasswordText))
-                .addGap(42, 42, 42)
-                .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addGap(58, 58, 58)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         PsychTrackerTabs.addTab("Login", LoginTab);
 
+        singuppasswordlabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         singuppasswordlabel.setText("Password:");
 
+        signupusernamelabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         signupusernamelabel.setText("Username:");
 
         usernamefieldsignup.addActionListener(new java.awt.event.ActionListener() {
@@ -254,6 +259,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             }
         });
 
+        SignUp.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         SignUp.setText("Sign Up");
         SignUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,47 +267,47 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             }
         });
 
+        reenterpasslabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         reenterpasslabel.setText("Re-Enter Password:");
 
-        LionStudySignUpLabel.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        LionStudySignUpLabel.setFont(new java.awt.Font("Verdana", 1, 28)); // NOI18N
         LionStudySignUpLabel.setText("PsychTracker Sign-Up");
 
         javax.swing.GroupLayout SignUpPanelLayout = new javax.swing.GroupLayout(SignUpPanel);
         SignUpPanel.setLayout(SignUpPanelLayout);
         SignUpPanelLayout.setHorizontalGroup(
             SignUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SignUpPanelLayout.createSequentialGroup()
+                .addGap(0, 224, Short.MAX_VALUE)
+                .addComponent(LionStudySignUpLabel)
+                .addGap(216, 216, 216))
             .addGroup(SignUpPanelLayout.createSequentialGroup()
                 .addGroup(SignUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(SignUpPanelLayout.createSequentialGroup()
+                        .addGap(210, 210, 210)
                         .addGroup(SignUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(SignUpPanelLayout.createSequentialGroup()
-                                .addGap(209, 209, 209)
-                                .addGroup(SignUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(singuppasswordlabel)
-                                    .addComponent(signupusernamelabel)))
-                            .addGroup(SignUpPanelLayout.createSequentialGroup()
-                                .addGap(147, 147, 147)
-                                .addComponent(reenterpasslabel)))
-                        .addGap(41, 41, 41)
+                            .addComponent(reenterpasslabel)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SignUpPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(SignUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(singuppasswordlabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(signupusernamelabel, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(SignUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(passwordfieldsignupreenter, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(passwordfieldsignup, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(usernamefieldsignup, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(SignUpPanelLayout.createSequentialGroup()
-                        .addGap(240, 240, 240)
-                        .addComponent(LionStudySignUpLabel)))
-                .addContainerGap(200, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SignUpPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(SignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(298, 298, 298))
+                        .addGap(340, 340, 340)
+                        .addComponent(SignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         SignUpPanelLayout.setVerticalGroup(
             SignUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SignUpPanelLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addGap(47, 47, 47)
                 .addComponent(LionStudySignUpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(28, 28, 28)
                 .addGroup(SignUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usernamefieldsignup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(signupusernamelabel))
@@ -313,21 +319,21 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                 .addGroup(SignUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(reenterpasslabel)
                     .addComponent(passwordfieldsignupreenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(55, 55, 55)
+                .addGap(35, 35, 35)
                 .addComponent(SignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(175, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout SignUpTabLayout = new javax.swing.GroupLayout(SignUpTab);
         SignUpTab.setLayout(SignUpTabLayout);
         SignUpTabLayout.setHorizontalGroup(
             SignUpTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 783, Short.MAX_VALUE)
+            .addGap(0, 788, Short.MAX_VALUE)
             .addGroup(SignUpTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(SignUpTabLayout.createSequentialGroup()
-                    .addGap(0, 23, Short.MAX_VALUE)
+                    .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(SignUpPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 24, Short.MAX_VALUE)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         SignUpTabLayout.setVerticalGroup(
             SignUpTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,7 +351,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 825, Short.MAX_VALUE)
+            .addGap(0, 830, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(18, 18, 18)
@@ -356,13 +362,13 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 677, Short.MAX_VALUE)
+            .addGap(0, 685, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(TopPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(PsychTrackerTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(PsychTrackerTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -376,32 +382,6 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     private void clientComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientComboBoxActionPerformed
 
     }//GEN-LAST:event_clientComboBoxActionPerformed
-
-    private void passwordfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordfieldKeyPressed
-        //if enter button is pressed while user is in the passwordfield, hit the enter button
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            
-        }
-    }//GEN-LAST:event_passwordfieldKeyPressed
-
-    private void usernamefieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernamefieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernamefieldActionPerformed
-
-    private void usernamefieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernamefieldKeyPressed
-        //if enter button is pressed while user is in the usernamefield, hit the enter button
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            
-        }
-    }//GEN-LAST:event_usernamefieldKeyPressed
-
-    private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-
-    }//GEN-LAST:event_LoginButtonActionPerformed
-
-    private void LoginButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LoginButtonKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LoginButtonKeyPressed
 
     private void usernamefieldsignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernamefieldsignupActionPerformed
         // TODO add your handling code here:
@@ -422,7 +402,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -467,6 +447,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> clientComboBox;
     private javax.swing.JLabel clientLabel;
     private javax.swing.JPanel clientPanel;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField passwordfield;
     private javax.swing.JPasswordField passwordfieldsignup;
     private javax.swing.JPasswordField passwordfieldsignupreenter;
