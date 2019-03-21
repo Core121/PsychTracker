@@ -92,6 +92,13 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             }
         }
         else{
+            this.fnamefieldfigure.setText("");
+            this.lnamefieldfigure.setText("");
+            this.emailfieldfigure.setText("");
+            this.phonefieldfigure.setText("");
+            this.relationshipfigurefield.setText("");
+            this.ratingfieldfigure.setText("");
+            this.figurenotetextarea.setText("");
             selectedFigure = -1;
         }
         this.figurelist.setModel(list);
@@ -106,7 +113,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         else{
             this.emailfield.setText("");
         }
-        if(clients.get(index).getPhonenumber()!=new BigInteger("0")){
+        if(!clients.get(index).getPhonenumber().equals(new BigInteger("0"))){
         this.phonefield.setText(clients.get(index).getPhonenumber().toString());
         }
         else{
@@ -125,7 +132,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         } else {
             this.emailfield.setText("");
         }
-        if (clients.get(index).getFigures().get(selectedFigure).getPhonenumber() != new BigInteger("0")) {
+        if(!clients.get(index).getPhonenumber().equals(new BigInteger("0"))){
             this.phonefieldfigure.setText(clients.get(index).getFigures().get(selectedFigure).getPhonenumber().toString());
         } else {
             this.phonefieldfigure.setText("");
@@ -149,6 +156,11 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             int size = client.getNotes().size();
             this.NoteTextArea.setText(client.getNotes().get(size-1).getNote());
             this.DateLabel.setText(client.getNotes().get(size-1).getDate().getMonth()+1 +"/"+ client.getNotes().get(size-1).getDate().getDate()+"/"+client.getNotes().get(size-1).getDate().getYear());
+        }
+        else{
+            this.NoteTextArea.setText("");
+            this.DateLabel.setText("00/00/00");
+            this.EditNoteButton.setEnabled(false);
         }
     }
     
@@ -913,9 +925,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                                             .addComponent(namelabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)))))))
                 .addGroup(FiguresTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(FiguresTabLayout.createSequentialGroup()
-                        .addComponent(donebuttonclientfigure)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(donebuttonclientfigure)
                     .addGroup(FiguresTabLayout.createSequentialGroup()
                         .addGroup(FiguresTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(fnamefieldfigure, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -927,8 +937,8 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                         .addGap(73, 73, 73)
                         .addGroup(FiguresTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(148, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         FiguresTabLayout.setVerticalGroup(
             FiguresTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1036,15 +1046,15 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         NotesTabLayout.setHorizontalGroup(
             NotesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(NotesTabLayout.createSequentialGroup()
-                .addContainerGap(134, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BackwardNoteButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ForwardNoteButton)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(NotesTabLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(194, 194, 194)
                 .addComponent(EditNoteButton)
                 .addGap(18, 18, 18)
                 .addComponent(DoneEditNoteButton)
@@ -1054,19 +1064,19 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                 .addComponent(DoneNoteButton)
                 .addGap(18, 18, 18)
                 .addComponent(CreateNoteButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
         NotesTabLayout.setVerticalGroup(
             NotesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(NotesTabLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addGroup(NotesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(DateLabel)
                     .addComponent(EditNoteButton)
                     .addComponent(CreateNoteButton)
                     .addComponent(DoneNoteButton)
                     .addComponent(DoneEditNoteButton))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(NotesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(NotesTabLayout.createSequentialGroup()
@@ -1229,6 +1239,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         this.currentNote = clients.get(index).getNotes().size()-1;
         this.refreshNotes(clients.get(index));
         this.CreateNoteButton.setEnabled(true);
+        this.EditNoteButton.setEnabled(true);
         JOptionPane.showMessageDialog(null, "Your note has been successfully saved.", "Success",JOptionPane.DEFAULT_OPTION);
     }//GEN-LAST:event_DoneNoteButtonActionPerformed
 
@@ -1328,7 +1339,9 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     private void EditNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditNoteButtonActionPerformed
         this.CreateNoteButton.setEnabled(false);
         this.NoteTextArea.setEditable(true);
+        this.EditNoteButton.setEnabled(false);
         this.DoneEditNoteButton.setVisible(true);
+ 
     }//GEN-LAST:event_EditNoteButtonActionPerformed
 
     private void DoneEditNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoneEditNoteButtonActionPerformed
@@ -1339,6 +1352,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         clients.get(index).getNotes().get(currentNote).setNote(this.NoteTextArea.getText());
         this.NoteTextArea.setEditable(false);
         this.DoneEditNoteButton.setVisible(false);
+        this.EditNoteButton.setEnabled(true);
         this.CreateNoteButton.setEnabled(true);
         this.NoteTextArea.setText(this.clients.get(index).getNotes().get(currentNote).getNote());
         JOptionPane.showMessageDialog(null, "Your note has been successfully saved.", "Success",JOptionPane.DEFAULT_OPTION);
@@ -1405,8 +1419,10 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_donebuttonclientfigureActionPerformed
 
     private void figurelistValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_figurelistValueChanged
-        selectedFigure = this.figurelist.getSelectedIndex();
+        if(clients.get(index).getFigures().size()>0){
+         selectedFigure = this.figurelist.getSelectedIndex();
         this.FillinFigureTab();
+        }
     }//GEN-LAST:event_figurelistValueChanged
 
     private void CreateFigureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateFigureButtonActionPerformed
