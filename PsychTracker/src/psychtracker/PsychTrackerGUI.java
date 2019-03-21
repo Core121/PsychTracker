@@ -155,8 +155,9 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         if(!client.getNotes().isEmpty()){
             int size = client.getNotes().size();
             this.NoteTextArea.setText(client.getNotes().get(size-1).getNote());
-            this.DateLabel.setText(client.getNotes().get(size-1).getDate().getMonth()+1 +"/"+ client.getNotes().get(size-1).getDate().getDate()+"/"+client.getNotes().get(size-1).getDate().getYear());
+            this.DateLabel.setText((client.getNotes().get(size-1).getDate().getMonth()+1) +"/"+ client.getNotes().get(size-1).getDate().getDate()+"/"+(client.getNotes().get(size-1).getDate().getYear()+1900));
             currentNote = size-1;
+            this.EditNoteButton.setEnabled(true);
         }
         else{
             this.NoteTextArea.setText("");
@@ -1054,7 +1055,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ForwardNoteButton)
                 .addContainerGap(134, Short.MAX_VALUE))
-            .addGroup(NotesTabLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NotesTabLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(EditNoteButton)
                 .addGap(18, 18, 18)
@@ -1070,14 +1071,14 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         NotesTabLayout.setVerticalGroup(
             NotesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(NotesTabLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addGroup(NotesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(DateLabel)
                     .addComponent(EditNoteButton)
                     .addComponent(CreateNoteButton)
                     .addComponent(DoneNoteButton)
                     .addComponent(DoneEditNoteButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(NotesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(NotesTabLayout.createSequentialGroup()
@@ -1226,6 +1227,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         this.NoteTextArea.setEditable(true);
         this.DoneNoteButton.setVisible(true);
         this.CreateNoteButton.setEnabled(false);
+        this.EditNoteButton.setEnabled(false);
         }
         else{
             JOptionPane.showMessageDialog(null, "Please select a client first.", "Error",JOptionPane.ERROR_MESSAGE);
@@ -1248,7 +1250,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         if (currentNote != 0) {
             this.NoteTextArea.setText(this.clients.get(index).getNotes().get(currentNote-1).getNote());
             int size = clients.get(index).getNotes().size();
-            this.DateLabel.setText(this.clients.get(index).getNotes().get(currentNote-1).getDate().getMonth()+1 +"/"+ this.clients.get(index).getNotes().get(currentNote-1).getDate().getDate()+"/"+this.clients.get(index).getNotes().get(currentNote-1).getDate().getYear());
+            this.DateLabel.setText((this.clients.get(index).getNotes().get(currentNote-1).getDate().getMonth()+1) +"/"+ this.clients.get(index).getNotes().get(currentNote-1).getDate().getDate()+"/"+(this.clients.get(index).getNotes().get(currentNote-1).getDate().getYear()+1900));
             currentNote--;
         }
         else{
@@ -1260,7 +1262,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         if (currentNote != clients.get(index).getNotes().size()-1) {
             this.NoteTextArea.setText(this.clients.get(index).getNotes().get(currentNote+1).getNote());
             int size = clients.get(index).getNotes().size();
-            this.DateLabel.setText(this.clients.get(index).getNotes().get(currentNote+1).getDate().getMonth()+1 +"/"+ this.clients.get(index).getNotes().get(currentNote+1).getDate().getDate()+"/"+this.clients.get(index).getNotes().get(currentNote+1).getDate().getYear());
+             this.DateLabel.setText((this.clients.get(index).getNotes().get(currentNote+1).getDate().getMonth()+1) +"/"+ this.clients.get(index).getNotes().get(currentNote+1).getDate().getDate()+"/"+(this.clients.get(index).getNotes().get(currentNote+1).getDate().getYear()+1900));
             currentNote++;
         }
         else{
