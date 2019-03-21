@@ -156,6 +156,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             int size = client.getNotes().size();
             this.NoteTextArea.setText(client.getNotes().get(size-1).getNote());
             this.DateLabel.setText(client.getNotes().get(size-1).getDate().getMonth()+1 +"/"+ client.getNotes().get(size-1).getDate().getDate()+"/"+client.getNotes().get(size-1).getDate().getYear());
+            currentNote = size-1;
         }
         else{
             this.NoteTextArea.setText("");
@@ -1046,15 +1047,15 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         NotesTabLayout.setHorizontalGroup(
             NotesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(NotesTabLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(134, Short.MAX_VALUE)
                 .addComponent(BackwardNoteButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ForwardNoteButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(134, Short.MAX_VALUE))
             .addGroup(NotesTabLayout.createSequentialGroup()
-                .addGap(194, 194, 194)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(EditNoteButton)
                 .addGap(18, 18, 18)
                 .addComponent(DoneEditNoteButton)
@@ -1064,7 +1065,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                 .addComponent(DoneNoteButton)
                 .addGap(18, 18, 18)
                 .addComponent(CreateNoteButton)
-                .addContainerGap(197, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         NotesTabLayout.setVerticalGroup(
             NotesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
