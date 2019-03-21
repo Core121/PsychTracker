@@ -5,27 +5,102 @@
  */
 package psychtracker;
 
-import java.awt.Dimension;
+import Classes.Client;
 import java.awt.Toolkit;
-import java.awt.Window;
-import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Corey
  */
 public class PsychTrackerGUI extends javax.swing.JFrame {
-
+    private int index = -1;
+    private int currentNote;
+    private ArrayList<Client> clients = new ArrayList<>();
+    
     protected void SetUpNormalUserScenario() {
         this.PsychTrackerTabs.remove(this.LoginTab);
         this.PsychTrackerTabs.remove(this.SignUpTab);
         this.PsychTrackerTabs.addTab("Client", new ImageIcon(this.getClass().getResource("/Res/ClientImg.png")), this.ClientTab);
     }
     
+    public void refreshClientListFName() {
+        String[] array = new String[clients.size()];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = clients.get(i).getFirstname();
+        }
+        this.clientComboBox.setModel(new DefaultComboBoxModel(array));
+        index = this.clientComboBox.getSelectedIndex();
+        this.LoadInAllClientData(clients.get(index));
+    }
+    
+    public void LoadInAllClientData(Client client){
+        this.refreshNotes(client);
+    }
+    
+    public void refreshNotes(Client client){
+        if(!client.getNotes().isEmpty()){
+            int size = client.getNotes().size();
+            this.NoteTextArea.setText(client.getNotes().get(size-1).getNote());
+            this.DateLabel.setText(client.getNotes().get(size-1).getDate().getMonth()+1 +"/"+ client.getNotes().get(size-1).getDate().getDate()+"/"+client.getNotes().get(size-1).getDate().getYear());
+        }
+    }
+    
+    public void refreshClientListLName() {
+        String[] array = new String[clients.size()];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = clients.get(i).getLastname();
+        }
+        this.clientComboBox.setModel(new DefaultComboBoxModel(array));
+        index = this.clientComboBox.getSelectedIndex();
+        this.LoadInAllClientData(clients.get(index));
+    }
+    
+    public void sortClientsbyFirstName(ArrayList<Client> clients) {
+        boolean flag = true;  // will determine when the sort is finished
+        Client temp;
+
+        while (flag) {
+            flag = false;
+            for (int i = 0; i < clients.size() - 1; i++) {
+                if (clients.get(i).getFirstname().compareToIgnoreCase(clients.get(i + 1).getFirstname()) > 0) {                                             // ascending sort
+                    temp = clients.get(i);
+                    clients.set(i, clients.get(i + 1));    // swapping
+                    clients.set(i + 1, temp);
+                    flag = true;
+                }
+            }
+        }
+    }
+
+    public void sortClientsByLastName(ArrayList<Client> clients) {
+        boolean flag = true;  // will determine when the sort is finished
+        Client temp;
+
+        while (flag) {
+            flag = false;
+            for (int i = 0; i < clients.size() - 1; i++) {
+                if (clients.get(i).getLastname().compareToIgnoreCase(clients.get(i + 1).getLastname()) > 0) {                                             // ascending sort
+                    temp = clients.get(i);
+                    clients.set(i, clients.get(i + 1));    // swapping
+                    clients.set(i + 1, temp);
+                    flag = true;
+                }
+            }
+        }
+    }
+    
 
     public PsychTrackerGUI() {
         initComponents();
+        this.DoneNoteButton.setVisible(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Res/brainstorm.png")));
         this.setExtendedState(this.MAXIMIZED_BOTH);
     }
@@ -39,6 +114,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        SortButtonGroup = new javax.swing.ButtonGroup();
         TopPanel = new javax.swing.JPanel();
         LionStudyImage = new javax.swing.JLabel();
         LionStudyText = new javax.swing.JLabel();
@@ -49,6 +125,9 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         clientComboBox = new javax.swing.JComboBox<String>();
         clientLabel = new javax.swing.JLabel();
         addClientButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        fnameradio = new javax.swing.JRadioButton();
+        lanmeradio = new javax.swing.JRadioButton();
         FiguresPanel = new javax.swing.JPanel();
         LoginTab = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -68,6 +147,16 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         reenterpasslabel = new javax.swing.JLabel();
         passwordfieldsignupreenter = new javax.swing.JPasswordField();
         LionStudySignUpLabel = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        NotesPanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        NoteTextArea = new javax.swing.JTextArea();
+        DateLabel = new javax.swing.JLabel();
+        EditNoteButton = new javax.swing.JButton();
+        CreateNoteButton = new javax.swing.JButton();
+        BackwardNoteButton = new javax.swing.JButton();
+        ForwardNoteButton = new javax.swing.JButton();
+        DoneNoteButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PsychTracker");
@@ -131,6 +220,25 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Sort By:");
+
+        SortButtonGroup.add(fnameradio);
+        fnameradio.setSelected(true);
+        fnameradio.setText("First Name");
+        fnameradio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fnameradioActionPerformed(evt);
+            }
+        });
+
+        SortButtonGroup.add(lanmeradio);
+        lanmeradio.setText("Last Name");
+        lanmeradio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lanmeradioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout clientPanelLayout = new javax.swing.GroupLayout(clientPanel);
         clientPanel.setLayout(clientPanelLayout);
         clientPanelLayout.setHorizontalGroup(
@@ -141,19 +249,31 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                     .addGroup(clientPanelLayout.createSequentialGroup()
                         .addComponent(clientComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(addClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(clientLabel))
-                .addContainerGap(333, Short.MAX_VALUE))
+                        .addComponent(addClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addComponent(fnameradio)
+                        .addGap(18, 18, 18)
+                        .addComponent(lanmeradio)
+                        .addContainerGap(355, Short.MAX_VALUE))
+                    .addGroup(clientPanelLayout.createSequentialGroup()
+                        .addComponent(clientLabel)
+                        .addGap(492, 492, 492)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         clientPanelLayout.setVerticalGroup(
             clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(clientPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(clientLabel)
+                .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(clientLabel)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(clientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(clientComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(addClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fnameradio)
+                    .addComponent(lanmeradio))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
@@ -163,7 +283,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         FiguresPanel.setLayout(FiguresPanelLayout);
         FiguresPanelLayout.setHorizontalGroup(
             FiguresPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 788, Short.MAX_VALUE)
+            .addGap(0, 1056, Short.MAX_VALUE)
         );
         FiguresPanelLayout.setVerticalGroup(
             FiguresPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,6 +296,11 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
 
         LoginButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         LoginButton.setText("Login");
+        LoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginButtonActionPerformed(evt);
+            }
+        });
 
         PasswordText.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         PasswordText.setText("Password:");
@@ -233,16 +358,16 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         LoginTabLayout.setHorizontalGroup(
             LoginTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginTabLayout.createSequentialGroup()
-                .addContainerGap(94, Short.MAX_VALUE)
+                .addContainerGap(224, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
         LoginTabLayout.setVerticalGroup(
             LoginTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginTabLayout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(41, 41, 41)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         PsychTrackerTabs.addTab("Login", LoginTab);
@@ -287,11 +412,8 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                         .addGap(210, 210, 210)
                         .addGroup(SignUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(reenterpasslabel)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SignUpPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(SignUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(singuppasswordlabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(signupusernamelabel, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(singuppasswordlabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(signupusernamelabel, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(SignUpPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(passwordfieldsignupreenter, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -328,7 +450,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         SignUpTab.setLayout(SignUpTabLayout);
         SignUpTabLayout.setHorizontalGroup(
             SignUpTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 788, Short.MAX_VALUE)
+            .addGap(0, 1056, Short.MAX_VALUE)
             .addGroup(SignUpTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(SignUpTabLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -347,40 +469,145 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
 
         PsychTrackerTabs.addTab("Sign Up", SignUpTab);
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1056, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 498, Short.MAX_VALUE)
+        );
+
+        PsychTrackerTabs.addTab("Figures", jPanel2);
+
+        NoteTextArea.setEditable(false);
+        NoteTextArea.setColumns(20);
+        NoteTextArea.setRows(5);
+        jScrollPane1.setViewportView(NoteTextArea);
+
+        DateLabel.setText("00/00/00");
+
+        EditNoteButton.setText("Edit");
+
+        CreateNoteButton.setText("Create");
+        CreateNoteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateNoteButtonActionPerformed(evt);
+            }
+        });
+
+        BackwardNoteButton.setText("<");
+        BackwardNoteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackwardNoteButtonActionPerformed(evt);
+            }
+        });
+
+        ForwardNoteButton.setText(">");
+        ForwardNoteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ForwardNoteButtonActionPerformed(evt);
+            }
+        });
+
+        DoneNoteButton.setBackground(new java.awt.Color(255, 51, 0));
+        DoneNoteButton.setText("Done");
+        DoneNoteButton.setSelected(true);
+        DoneNoteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DoneNoteButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout NotesPanelLayout = new javax.swing.GroupLayout(NotesPanel);
+        NotesPanel.setLayout(NotesPanelLayout);
+        NotesPanelLayout.setHorizontalGroup(
+            NotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NotesPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BackwardNoteButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ForwardNoteButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(NotesPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(EditNoteButton)
+                .addGap(233, 233, 233)
+                .addComponent(DateLabel)
+                .addGap(177, 177, 177)
+                .addComponent(DoneNoteButton)
+                .addGap(18, 18, 18)
+                .addComponent(CreateNoteButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        NotesPanelLayout.setVerticalGroup(
+            NotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NotesPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(NotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(DateLabel)
+                    .addComponent(EditNoteButton)
+                    .addComponent(CreateNoteButton)
+                    .addComponent(DoneNoteButton))
+                .addGap(18, 18, 18)
+                .addGroup(NotesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(NotesPanelLayout.createSequentialGroup()
+                        .addComponent(BackwardNoteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(ForwardNoteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+
+        PsychTrackerTabs.addTab("Notes", NotesPanel);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 830, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(PsychTrackerTabs)
-                        .addComponent(TopPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGap(19, 19, 19)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PsychTrackerTabs)
+                    .addComponent(TopPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 685, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(TopPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(PsychTrackerTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(TopPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PsychTrackerTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void addClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientButtonActionPerformed
-
+         ClientDialog cd = new ClientDialog(this,true);
+         cd.setLocationRelativeTo(null);
+         Client temp = cd.getGoing();
+       if(temp != null){
+            clients.add(temp);
+            if(this.fnameradio.isSelected()){
+                this.sortClientsbyFirstName(clients);
+                this.refreshClientListFName();
+            }
+            else{
+                this.sortClientsByLastName(clients);
+                this.refreshClientListLName();
+            }
+       }
     }//GEN-LAST:event_addClientButtonActionPerformed
 
     private void clientComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientComboBoxActionPerformed
-
+        index = this.clientComboBox.getSelectedIndex();
+        this.LoadInAllClientData(clients.get(index));
     }//GEN-LAST:event_clientComboBoxActionPerformed
 
     private void usernamefieldsignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernamefieldsignupActionPerformed
@@ -390,6 +617,67 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     private void SignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpActionPerformed
 
     }//GEN-LAST:event_SignUpActionPerformed
+
+    private void lanmeradioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lanmeradioActionPerformed
+        this.sortClientsByLastName(clients);
+        this.refreshClientListLName();
+    }//GEN-LAST:event_lanmeradioActionPerformed
+
+    private void fnameradioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnameradioActionPerformed
+       this.sortClientsbyFirstName(clients);
+       this.refreshClientListFName();
+    }//GEN-LAST:event_fnameradioActionPerformed
+
+    private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LoginButtonActionPerformed
+
+    private void CreateNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateNoteButtonActionPerformed
+        if(index != -1){
+        this.NoteTextArea.setText("Edit me!");
+        this.NoteTextArea.setEditable(true);
+        this.DoneNoteButton.setVisible(true);
+        this.CreateNoteButton.setEnabled(false);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select a client first.", "Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_CreateNoteButtonActionPerformed
+
+    private void DoneNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoneNoteButtonActionPerformed
+        clients.get(index).AddNote(this.NoteTextArea.getText(), new Date());
+        this.currentNote = clients.size()-1;
+        this.NoteTextArea.setEditable(false);
+        this.DoneNoteButton.setVisible(false);
+        this.currentNote = clients.get(index).getNotes().size()-1;
+        this.refreshNotes(clients.get(index));
+        this.CreateNoteButton.setEnabled(true);
+        JOptionPane.showMessageDialog(null, "Your note has been successfully saved.", "Success",JOptionPane.DEFAULT_OPTION);
+    }//GEN-LAST:event_DoneNoteButtonActionPerformed
+
+    private void BackwardNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackwardNoteButtonActionPerformed
+        if (currentNote != 0) {
+            this.NoteTextArea.setText(this.clients.get(index).getNotes().get(currentNote-1).getNote());
+            int size = clients.get(index).getNotes().size();
+            this.DateLabel.setText(this.clients.get(index).getNotes().get(currentNote-1).getDate().getMonth()+1 +"/"+ this.clients.get(index).getNotes().get(currentNote-1).getDate().getDate()+"/"+this.clients.get(index).getNotes().get(currentNote-1).getDate().getYear());
+            currentNote--;
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "There are no more notes to go back to.", "Woops!",JOptionPane.DEFAULT_OPTION);
+        }
+    }//GEN-LAST:event_BackwardNoteButtonActionPerformed
+
+    private void ForwardNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ForwardNoteButtonActionPerformed
+        if (currentNote != clients.get(index).getNotes().size()-1) {
+            this.NoteTextArea.setText(this.clients.get(index).getNotes().get(currentNote+1).getNote());
+            int size = clients.get(index).getNotes().size();
+            this.DateLabel.setText(this.clients.get(index).getNotes().get(currentNote+1).getDate().getMonth()+1 +"/"+ this.clients.get(index).getNotes().get(currentNote+1).getDate().getDate()+"/"+this.clients.get(index).getNotes().get(currentNote+1).getDate().getYear());
+            currentNote++;
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "There are no more notes.", "Woops!",JOptionPane.DEFAULT_OPTION);
+        }
+    }//GEN-LAST:event_ForwardNoteButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -428,26 +716,40 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackwardNoteButton;
     private javax.swing.JPanel ClientTab;
+    private javax.swing.JButton CreateNoteButton;
+    private javax.swing.JLabel DateLabel;
+    private javax.swing.JButton DoneNoteButton;
+    private javax.swing.JButton EditNoteButton;
     private javax.swing.JPanel FiguresPanel;
+    private javax.swing.JButton ForwardNoteButton;
     private javax.swing.JLabel LionStudyImage;
     private javax.swing.JLabel LionStudyLoginText;
     private javax.swing.JLabel LionStudySignUpLabel;
     private javax.swing.JLabel LionStudyText;
     private javax.swing.JButton LoginButton;
     private javax.swing.JPanel LoginTab;
+    private javax.swing.JTextArea NoteTextArea;
+    private javax.swing.JPanel NotesPanel;
     private javax.swing.JLabel PasswordText;
     private javax.swing.JTabbedPane PsychTrackerTabs;
     private javax.swing.JButton SignUp;
     private javax.swing.JPanel SignUpPanel;
     private javax.swing.JPanel SignUpTab;
+    private javax.swing.ButtonGroup SortButtonGroup;
     private javax.swing.JPanel TopPanel;
     private javax.swing.JLabel UsernameText;
     private javax.swing.JButton addClientButton;
     private javax.swing.JComboBox<String> clientComboBox;
     private javax.swing.JLabel clientLabel;
     private javax.swing.JPanel clientPanel;
+    private javax.swing.JRadioButton fnameradio;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton lanmeradio;
     private javax.swing.JPasswordField passwordfield;
     private javax.swing.JPasswordField passwordfieldsignup;
     private javax.swing.JPasswordField passwordfieldsignupreenter;
