@@ -211,55 +211,48 @@ public class FigureDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CreateFigureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateFigureButtonActionPerformed
-        if(this.lnamefield.getText().equals("") || this.fnamefield.getText().equals("")||this.relationshipfield.getText().equals("")){
+        if (this.lnamefield.getText().equals("") || this.fnamefield.getText().equals("") || this.relationshipfield.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Required fields not filled out", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else {
+        } else {
             BigInteger phonenum = new BigInteger("0");
-            int rating=-1;
-            boolean tripped=false;
-            String email = null,relation = null;
+            int rating = -1;
+            boolean tripped = false;
+            String email = null, relation = null;
             if (this.phonenumberfield.getText().isEmpty()) {
                 phonenum = new BigInteger("0");
-            }
-            else{
+            } else {
                 try {
                     phonenum = new BigInteger(this.phonenumberfield.getText());
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Phone is not an integer", "Error", JOptionPane.ERROR_MESSAGE);
-                    tripped=true;
+                    tripped = true;
                 }
             }
             if (this.emailfield.getText().isEmpty()) {
                 email = "";
-            }
-            else{
+            } else {
                 email = this.emailfield.getText();
             }
-            
+
             if (this.ratingfield.getText().isEmpty()) {
                 rating = -1;
-            }
-            else{
-                try{
-                rating = (int)Long.parseLong(this.ratingfield.getText());
-                }
-                catch (Exception e) {
+            } else {
+                try {
+                    rating = (int) Long.parseLong(this.ratingfield.getText());
+                } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Rating is not an integer", "Error", JOptionPane.ERROR_MESSAGE);
-                    tripped=true;
+                    tripped = true;
                 }
             }
             if (this.relationshipfield.getText().isEmpty()) {
                 relation = "";
-            }
-            else{
+            } else {
                 relation = this.relationshipfield.getText();
             }
-            if(!tripped){
-                    f1 = new Figures(this.fnamefield.getText(), this.lnamefield.getText(), phonenum, email, relation, this.FigureNoteArea.getText(), rating);
-                    this.setVisible(false);
-                    this.dispose();
+            if (!tripped) {
+                f1 = new Figures(this.fnamefield.getText(), this.lnamefield.getText(), phonenum, email, relation, this.FigureNoteArea.getText(), rating);
+                this.setVisible(false);
+                this.dispose();
             }
         }
     }//GEN-LAST:event_CreateFigureButtonActionPerformed
