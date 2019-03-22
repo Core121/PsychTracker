@@ -164,25 +164,29 @@ public class ClientDialog extends javax.swing.JDialog {
         if(this.lnamefield.getText().equals("") || this.fnamefield.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Required fields not filled out", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        else if(this.phonenumberfield.getText().isEmpty() && this.emailfield.getText().isEmpty()){
-            client = new Client(this.fnamefield.getText(), this.lnamefield.getText(), new BigInteger("0"), "");
-            this.setVisible(false);
-            this.dispose();
-        }
-        else if(this.phonenumberfield.getText().isEmpty()){
-            client = new Client(this.fnamefield.getText(), this.lnamefield.getText(), new BigInteger("0"), this.emailfield.getText());
-            this.setVisible(false);
-            this.dispose();
-        }
-        else if(this.emailfield.getText().isEmpty()){
-            try{
-            BigInteger phonenum = new BigInteger(this.phonenumberfield.getText());
-            client = new Client(this.fnamefield.getText(), this.lnamefield.getText(), phonenum, "");
-            this.setVisible(false);
-            this.dispose();
+        else {
+            BigInteger phonenum = new BigInteger("0");
+            boolean tripped = false;
+            String email = null;
+            if (this.phonenumberfield.getText().isEmpty()) {
+                phonenum = new BigInteger("0");
+            } else {
+                try {
+                    phonenum = new BigInteger(this.phonenumberfield.getText());
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Phone is not an integer", "Error", JOptionPane.ERROR_MESSAGE);
+                    tripped = true;
+                }
             }
-            catch(Exception e){
-                JOptionPane.showMessageDialog(this, "Phone number is not an integer", "Error", JOptionPane.ERROR_MESSAGE);
+            if (this.emailfield.getText().isEmpty()) {
+                email = "";
+            } else {
+                email = this.emailfield.getText();
+            }
+            if (!tripped) {
+                client = new Client(this.fnamefield.getText(), this.lnamefield.getText(), phonenum, email);
+                this.setVisible(false);
+                this.dispose();
             }
         }
     }//GEN-LAST:event_CreateClientButtonActionPerformed
