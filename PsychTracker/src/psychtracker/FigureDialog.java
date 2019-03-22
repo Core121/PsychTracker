@@ -15,12 +15,15 @@ import javax.swing.JOptionPane;
  * @author Corey
  */
 public class FigureDialog extends javax.swing.JDialog {
+
     private Figures f1;
-    public Figures getGoing(){
+
+    public Figures getGoing() {
         this.getRootPane().setDefaultButton(this.CreateFigureButton);
         this.setVisible(true);
         return f1;
     }
+
     /**
      * Creates new form ClientDialog
      */

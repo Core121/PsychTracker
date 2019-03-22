@@ -49,7 +49,6 @@ import javax.swing.JOptionPane;
 public class PsychTrackerGUI extends javax.swing.JFrame {
 
     //the selected client's index
-
     private int index = -1;
     //the selected Figure
     private int selectedFigure = -1;
@@ -91,7 +90,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             this.LoadInAllClientData(clients.get(index));
         }
     }
-    
+
     public void refreshClientListLName() {
         if (clients.size() > 0) {
             String[] array = new String[clients.size()];
@@ -248,7 +247,6 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         }
     }
 
-
     //Bubble Sort to sort clients by first name
     public void sortClientsbyFirstName(ArrayList<Client> clients) {
         boolean flag = true;  // will determine when the sort is finished
@@ -283,22 +281,21 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         }
     }
 
-
     public PsychTrackerGUI() {
         initComponents();
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                    setVisible(false);
-                    if(username!=null && ciph!=null){
-                        try {
-                            EncryptFile(); //Encrypt the saved clients list onto the hard drive before exiting
-                        } catch (ClassNotFoundException ex) {
-                            Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                setVisible(false);
+                if (username != null && ciph != null) {
+                    try {
+                        EncryptFile(); //Encrypt the saved clients list onto the hard drive before exiting
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    dispose();
-                    System.exit(0);
+                }
+                dispose();
+                System.exit(0);
             }
         });
         this.DoneNoteButton.setVisible(false);
@@ -1114,20 +1111,19 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientButtonActionPerformed
-         ClientDialog cd = new ClientDialog(this,true);
-         cd.setLocationRelativeTo(null);
-         Client temp = cd.getGoing(); //getGoing passes back the object created by the user in the dialog if there is one
-       if(temp != null){
+        ClientDialog cd = new ClientDialog(this, true);
+        cd.setLocationRelativeTo(null);
+        Client temp = cd.getGoing(); //getGoing passes back the object created by the user in the dialog if there is one
+        if (temp != null) {
             clients.add(temp);
-            if(this.fnameradio.isSelected()){ //if we need to sort by fname
+            if (this.fnameradio.isSelected()) { //if we need to sort by fname
                 this.sortClientsbyFirstName(clients);
                 this.refreshClientListFName();
-            }
-            else{ //if we need to sort by last name
+            } else { //if we need to sort by last name
                 this.sortClientsByLastName(clients);
                 this.refreshClientListLName();
             }
-       }
+        }
     }//GEN-LAST:event_addClientButtonActionPerformed
 
     private void clientComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientComboBoxActionPerformed
@@ -1189,8 +1185,8 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lanmeradioActionPerformed
 
     private void fnameradioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnameradioActionPerformed
-       this.sortClientsbyFirstName(clients);
-       this.refreshClientListFName();
+        this.sortClientsbyFirstName(clients);
+        this.refreshClientListFName();
     }//GEN-LAST:event_fnameradioActionPerformed
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
@@ -1227,14 +1223,14 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
 
     private void DoneNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoneNoteButtonActionPerformed
         clients.get(index).AddNote(this.NoteTextArea.getText(), new Date());
-        this.currentNote = clients.size()-1;
+        this.currentNote = clients.size() - 1;
         this.NoteTextArea.setEditable(false);
         this.DoneNoteButton.setVisible(false);
-        this.currentNote = (clients.get(index).getNotes().size()-1);
+        this.currentNote = (clients.get(index).getNotes().size() - 1);
         this.refreshNotes(clients.get(index));
         this.CreateNoteButton.setEnabled(true);
         this.EditNoteButton.setEnabled(true);
-        JOptionPane.showMessageDialog(null, "Your note has been successfully saved.", "Success",JOptionPane.DEFAULT_OPTION);
+        JOptionPane.showMessageDialog(null, "Your note has been successfully saved.", "Success", JOptionPane.DEFAULT_OPTION);
     }//GEN-LAST:event_DoneNoteButtonActionPerformed
 
     private void BackwardNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackwardNoteButtonActionPerformed
@@ -1243,15 +1239,14 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             Note note = this.clients.get(index).getNotes().get(currentNote);
             this.NoteTextArea.setText(note.getNote());
             int size = clients.get(index).getNotes().size();
-            this.DateLabel.setText((note.getDate().getMonth()+1) +"/"+ note.getDate().getDate()+"/"+(note.getDate().getYear()+1900));
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "There are no more notes to go back to.", "Woops!",JOptionPane.DEFAULT_OPTION);
+            this.DateLabel.setText((note.getDate().getMonth() + 1) + "/" + note.getDate().getDate() + "/" + (note.getDate().getYear() + 1900));
+        } else {
+            JOptionPane.showMessageDialog(null, "There are no more notes to go back to.", "Woops!", JOptionPane.DEFAULT_OPTION);
         }
     }//GEN-LAST:event_BackwardNoteButtonActionPerformed
 
     private void ForwardNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ForwardNoteButtonActionPerformed
-           int size = clients.get(index).getNotes().size();
+        int size = clients.get(index).getNotes().size();
         if (currentNote != (size - 1) && size > 0) { //if not last note
             currentNote++;
             Note note = this.clients.get(index).getNotes().get(currentNote);
@@ -1282,7 +1277,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_usernamefieldsignupKeyPressed
 
     private void passwordfieldsignupKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordfieldsignupKeyPressed
-       if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             this.SignUp.doClick();
         }
     }//GEN-LAST:event_passwordfieldsignupKeyPressed
@@ -1331,14 +1326,13 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_donebuttonclientActionPerformed
 
     private void EditNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditNoteButtonActionPerformed
-        if(index != -1 && clients.size()>0){
-        this.CreateNoteButton.setEnabled(false);
-        this.NoteTextArea.setEditable(true);
-        this.EditNoteButton.setEnabled(false);
-        this.DoneEditNoteButton.setVisible(true);
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Please select a client first", "Woops!",JOptionPane.ERROR_MESSAGE);
+        if (index != -1 && clients.size() > 0) {
+            this.CreateNoteButton.setEnabled(false);
+            this.NoteTextArea.setEditable(true);
+            this.EditNoteButton.setEnabled(false);
+            this.DoneEditNoteButton.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a client first", "Woops!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_EditNoteButtonActionPerformed
 

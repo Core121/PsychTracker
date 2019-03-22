@@ -12,12 +12,13 @@ import java.math.BigInteger;
  *
  * @author Corey
  */
-public abstract class Person implements Serializable{
+public abstract class Person implements Serializable {
+
     private String firstname;
     private String lastname;
     private BigInteger phonenumber;
     private String email;
-    
+
     public String getFirstname() {
         return firstname;
     }

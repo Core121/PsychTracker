@@ -14,12 +14,15 @@ import javax.swing.JOptionPane;
  * @author Corey
  */
 public class ClientDialog extends javax.swing.JDialog {
+
     private Client client;
-    public Client getGoing(){
+
+    public Client getGoing() {
         this.getRootPane().setDefaultButton(this.CreateClientButton);
         this.setVisible(true);
         return client;
     }
+
     /**
      * Creates new form ClientDialog
      */
@@ -161,10 +164,9 @@ public class ClientDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CreateClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateClientButtonActionPerformed
-        if(this.lnamefield.getText().equals("") || this.fnamefield.getText().equals("")){
+        if (this.lnamefield.getText().equals("") || this.fnamefield.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Required fields not filled out", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else {
+        } else {
             BigInteger phonenum = new BigInteger("0");
             boolean tripped = false;
             String email = null;

@@ -12,18 +12,21 @@ import java.util.Date;
  *
  * @author Corey
  */
-public class Note implements Serializable{
+public class Note implements Serializable {
+
     private String note;
     private Date date;
-    
-    public Note(String note, Date date){
-       this.setNote(note);
-       this.setDate(date);
+
+    public Note(String note, Date date) {
+        this.setNote(note);
+        this.setDate(date);
     }
-    public Note(){
+
+    public Note() {
         this.setDate(null);
     }
-     public String getNote() {
+
+    public String getNote() {
         return note;
     }
 

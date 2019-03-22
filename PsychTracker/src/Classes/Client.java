@@ -15,32 +15,34 @@ import javax.swing.JOptionPane;
  *
  * @author Corey
  */
-public class Client extends Person implements Serializable{
+public class Client extends Person implements Serializable {
+
     private ArrayList<Note> notes = new ArrayList<>();
     private ArrayList<Figures> figures = new ArrayList<>();
-    
-    public Client(String firstname, String lastname, BigInteger phonenumber, String email){
+
+    public Client(String firstname, String lastname, BigInteger phonenumber, String email) {
         this.setEmail(email);
         this.setFirstname(firstname);
         this.setLastname(lastname);
         this.setPhonenumber(phonenumber);
     }
-    public Client(){
+
+    public Client() {
         this.setEmail(null);
         this.setFirstname(null);
         this.setLastname(null);
         this.setPhonenumber(new BigInteger("0"));
     }
-    
-    public ArrayList<Figures> getFigures(){
+
+    public ArrayList<Figures> getFigures() {
         return this.figures;
     }
-    
-    public ArrayList<Note> getNotes(){
+
+    public ArrayList<Note> getNotes() {
         return this.notes;
     }
-    
+
     public void AddNote(String note, Date date) {
-            notes.add(new Note(note, date));
+        notes.add(new Note(note, date));
     }
 }

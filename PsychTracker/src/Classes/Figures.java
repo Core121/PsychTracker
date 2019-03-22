@@ -12,32 +12,34 @@ import java.math.BigInteger;
  *
  * @author Corey
  */
-public class Figures extends Person implements Serializable{
+public class Figures extends Person implements Serializable {
+
     private int rating;
     private String relationship;
     private String note;
-    
-    public Figures(String firstname, String lastname, BigInteger phonenumber, String email, String relationship, String note, int rating){
+
+    public Figures(String firstname, String lastname, BigInteger phonenumber, String email, String relationship, String note, int rating) {
         this.setEmail(email);
         this.setFirstname(firstname);
         this.setLastname(lastname);
         this.setPhonenumber(phonenumber);
         this.rating = rating;
-        this.relationship=relationship;
-        this.note=note;
+        this.relationship = relationship;
+        this.note = note;
     }
 
-     public String getNote(){
-         return note;
-     }
-     
-     public void setNote(String str){
-         this.note = str;
-     }
-     
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String str) {
+        this.note = str;
+    }
+
     public void setRating(int rating) {
         this.rating = rating;
     }
+
     public int getRating() {
         return rating;
     }
