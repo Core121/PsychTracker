@@ -5,7 +5,6 @@
  */
 package psychtracker;
 
-import Classes.Client;
 import Classes.Figures;
 import java.math.BigInteger;
 import javax.swing.JOptionPane;
