@@ -1043,7 +1043,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="DateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="EditNoteButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1051,7 +1051,7 @@
                           <Component id="DoneNoteButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="DoneEditNoteButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jScrollPane1" min="-2" pref="448" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">

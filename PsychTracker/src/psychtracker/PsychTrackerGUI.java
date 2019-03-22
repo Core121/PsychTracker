@@ -7,6 +7,7 @@ package psychtracker;
 
 import Classes.Client;
 import Classes.Figures;
+import Classes.Note;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -46,13 +47,20 @@ import javax.swing.JOptionPane;
  * @author Corey
  */
 public class PsychTrackerGUI extends javax.swing.JFrame {
+
+    //the selected client's index
+
     private int index = -1;
+    //the selected Figure
     private int selectedFigure = -1;
+    //index of the currentNote in view
     private int currentNote;
+    //Cipher for encryption
     private String ciph;
     private String username;
+    //Clients ArrayList
     private ArrayList<Client> clients = new ArrayList<>();
-    
+
     //only run at very beginning
     protected void SetUpLoginScenario() {
         this.PsychTrackerTabs.addTab("Login", LoginTab);
@@ -61,7 +69,8 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         this.PsychTrackerTabs.remove(this.NotesTab);
         this.PsychTrackerTabs.remove(this.FiguresTab);
     }
-    
+
+    //Setup For After Login
     private void SetUpNormalUserScenario() {
         this.PsychTrackerTabs.remove(this.LoginTab);
         this.PsychTrackerTabs.remove(this.SignUpTab);
@@ -69,29 +78,40 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         this.PsychTrackerTabs.addTab("Figures", FiguresTab);
         this.PsychTrackerTabs.addTab("Notes", NotesTab);
     }
-    
-    
-    
+
+    //Refresh the Client list, displaying the first name
     private void refreshClientListFName() {
-        if(clients.size()>0){
-        String[] array = new String[clients.size()];
-        for (int i = 0; i < array.length; i++) {
-            array[i] = clients.get(i).getFirstname();
-        }
-        this.clientComboBox.setModel(new DefaultComboBoxModel(array));
-        index = this.clientComboBox.getSelectedIndex();
-        this.LoadInAllClientData(clients.get(index));
+        if (clients.size() > 0) {
+            String[] array = new String[clients.size()];
+            for (int i = 0; i < array.length; i++) {
+                array[i] = clients.get(i).getFirstname();
+            }
+            this.clientComboBox.setModel(new DefaultComboBoxModel(array));
+            index = this.clientComboBox.getSelectedIndex();
+            this.LoadInAllClientData(clients.get(index));
         }
     }
     
+    public void refreshClientListLName() {
+        if (clients.size() > 0) {
+            String[] array = new String[clients.size()];
+            for (int i = 0; i < array.length; i++) {
+                array[i] = clients.get(i).getLastname();
+            }
+            this.clientComboBox.setModel(new DefaultComboBoxModel(array));
+            index = this.clientComboBox.getSelectedIndex();
+            this.LoadInAllClientData(clients.get(index));
+        }
+    }
+
+    //Refreshes the figures per client selected
     private void refreshFigureList() {
         DefaultListModel list = new DefaultListModel();
         if (clients.get(index).getFigures().size() > 0) {
             for (int i = 0; i < clients.get(index).getFigures().size(); i++) {
-                list.add(i, clients.get(index).getFigures().get(i).getFirstname() + " " + clients.get(index).getFigures().get(i).getLastname() +": " + clients.get(index).getFigures().get(i).getRelationship());
+                list.add(i, clients.get(index).getFigures().get(i).getFirstname() + " " + clients.get(index).getFigures().get(i).getLastname() + ": " + clients.get(index).getFigures().get(i).getRelationship());
             }
-        }
-        else{
+        } else {
             this.fnamefieldfigure.setText("");
             this.lnamefieldfigure.setText("");
             this.emailfieldfigure.setText("");
@@ -99,80 +119,79 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             this.relationshipfigurefield.setText("");
             this.ratingfieldfigure.setText("");
             this.figurenotetextarea.setText("");
+            //No figure selected if there are none in the list
             selectedFigure = -1;
         }
         this.figurelist.setModel(list);
     }
-    
-    private void FillinClientTab(){
+
+    //Fill in the client tab with the client's info
+    private void FillinClientTab() {
         this.fnamefield.setText(clients.get(index).getFirstname());
         this.lnamefield.setText(clients.get(index).getLastname());
-        if(clients.get(index).getEmail()!=""){
-        this.emailfield.setText(clients.get(index).getEmail());
-        }
-        else{
+        if (!clients.get(index).getEmail().equals("")) {
+            this.emailfield.setText(clients.get(index).getEmail());
+        } else {
             this.emailfield.setText("");
         }
-        if(!clients.get(index).getPhonenumber().equals(new BigInteger("0"))){
-        this.phonefield.setText(clients.get(index).getPhonenumber().toString());
-        }
-        else{
+        if (!clients.get(index).getPhonenumber().equals(new BigInteger("0"))) {
+            this.phonefield.setText(clients.get(index).getPhonenumber().toString());
+        } else {
             this.phonefield.setText("");
         }
     }
-    
-    private void FillinFigureTab(){
-        this.fnamefieldfigure.setText(clients.get(index).getFigures().get(selectedFigure).getFirstname());
-        this.lnamefieldfigure.setText(clients.get(index).getFigures().get(selectedFigure).getLastname());
-        this.figurenotetextarea.setText(clients.get(index).getFigures().get(selectedFigure).getNote());
-        this.relationshipfigurefield.setText(clients.get(index).getFigures().get(selectedFigure).getRelationship());
-        this.ratingfieldfigure.setText(Integer.toString(clients.get(index).getFigures().get(selectedFigure).getRating()));
-        if (clients.get(index).getFigures().get(selectedFigure).getEmail() != "") {
-            this.emailfield.setText(clients.get(index).getFigures().get(selectedFigure).getEmail());
+
+    //Fills in the figure tab per client selected
+    private void FillinFigureTab() {
+        Figures selected = clients.get(index).getFigures().get(selectedFigure);
+        this.fnamefieldfigure.setText(selected.getFirstname());
+        this.lnamefieldfigure.setText(selected.getLastname());
+        this.figurenotetextarea.setText(selected.getNote());
+        this.relationshipfigurefield.setText(selected.getRelationship());
+        this.ratingfieldfigure.setText(Integer.toString(selected.getRating()));
+        if (selected.getEmail() != "") {
+            this.emailfield.setText(selected.getEmail());
         } else {
             this.emailfield.setText("");
         }
-        if(!clients.get(index).getPhonenumber().equals(new BigInteger("0"))){
-            this.phonefieldfigure.setText(clients.get(index).getFigures().get(selectedFigure).getPhonenumber().toString());
+        if (!selected.getPhonenumber().equals(new BigInteger("0"))) {
+            this.phonefieldfigure.setText(selected.getPhonenumber().toString());
         } else {
             this.phonefieldfigure.setText("");
         }
-        if(clients.get(index).getFigures().get(selectedFigure).getRating()!=-1){
-            this.ratingfieldfigure.setText(Integer.toString(clients.get(index).getFigures().get(selectedFigure).getRating()));
-        }
-        else{
+        if (selected.getRating() != -1) {
+            this.ratingfieldfigure.setText(Integer.toString(selected.getRating()));
+        } else {
             this.ratingfieldfigure.setText("");
         }
     }
-    
-    private void LoadInAllClientData(Client client){
+
+    private void LoadInAllClientData(Client client) {
         this.refreshNotes(client);
         this.FillinClientTab();
         this.refreshFigureList();
     }
-    
-    private void refreshNotes(Client client){
-        if(!client.getNotes().isEmpty()){
+
+    //refresh the notes of a client
+    private void refreshNotes(Client client) {
+        if (!client.getNotes().isEmpty()) {
             int size = client.getNotes().size();
-            this.NoteTextArea.setText(client.getNotes().get(size-1).getNote());
-            this.DateLabel.setText((client.getNotes().get(size-1).getDate().getMonth()+1) +"/"+ client.getNotes().get(size-1).getDate().getDate()+"/"+(client.getNotes().get(size-1).getDate().getYear()+1900));
-            currentNote = size-1;
-            this.EditNoteButton.setEnabled(true);
-        }
-        else{
+            Date temp = client.getNotes().get(size - 1).getDate();
+            this.NoteTextArea.setText(client.getNotes().get(size - 1).getNote()); //Add 1 because 0 is January. Add 1900 because Date subtracts 1900
+            this.DateLabel.setText((temp.getMonth() + 1) + "/" + temp.getDate() + "/" + (temp.getYear() + 1900));
+            currentNote = size - 1; //set the current note to it's real position
+            this.EditNoteButton.setEnabled(true); //if there is a note we can enable the edit button
+        } else {
             this.NoteTextArea.setText("");
             this.DateLabel.setText("00/00/00");
             this.EditNoteButton.setEnabled(false);
         }
     }
-    
-    
-    private void EncryptFile() throws ClassNotFoundException{
-        try {
-            String path = System.getProperty("user.home") + File.separator + "Documents";
-            path += File.separator + "PsychTracker" + File.separator+ this.username + ".dat";
-            File customFile = new File(path);
 
+    private void EncryptFile() throws ClassNotFoundException {
+        try {
+            String path = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "PsychTracker" + File.separator + this.username + ".dat";
+            File customFile = new File(path);
             SecretKey key64 = new SecretKeySpec(ciph.getBytes(), "Blowfish");
             Cipher cipher = null;
             try {
@@ -186,7 +205,6 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             SealedObject sealedObject = new SealedObject(this.clients, cipher);
             CipherOutputStream cipherOutputStream = new CipherOutputStream(new BufferedOutputStream(new FileOutputStream(customFile)), cipher);
             ObjectOutputStream outputStream = new ObjectOutputStream(cipherOutputStream);
-            
             outputStream.writeObject(sealedObject);
             outputStream.close();
         } catch (IOException ex) {
@@ -197,17 +215,15 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void DecrpytFile() throws InvalidKeyException{
-         String path = System.getProperty("user.home") + File.separator + "Documents";
-            path += File.separator + "PsychTracker" + File.separator + this.username + ".dat";
-            File customFile = new File(path);
-//You may use any combination, but you should use the same for writing and reading
-            SecretKey key64 = new SecretKeySpec(ciph.getBytes(), "Blowfish");
-            Cipher cipher = null;
-            try {
-                cipher = Cipher.getInstance("Blowfish");
-                cipher.init(Cipher.DECRYPT_MODE, key64);
+
+    private void DecrpytFile() throws InvalidKeyException {
+        String path = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "PsychTracker" + File.separator + this.username + ".dat";
+        File customFile = new File(path);
+        SecretKey key64 = new SecretKeySpec(ciph.getBytes(), "Blowfish");
+        Cipher cipher = null;
+        try {
+            cipher = Cipher.getInstance("Blowfish");
+            cipher.init(Cipher.DECRYPT_MODE, key64);
             CipherInputStream cipherInputStream = new CipherInputStream(new BufferedInputStream(new FileInputStream(customFile)), cipher);
             ObjectInputStream inputStream = new ObjectInputStream(cipherInputStream);
             SealedObject sealedObject = (SealedObject) inputStream.readObject();
@@ -215,46 +231,32 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             this.clients = passClients;
             this.SetUpNormalUserScenario();
             this.refreshClientListFName();
-            }catch(StreamCorruptedException e){
-                JOptionPane.showMessageDialog(null, "Wrong password!", "Error",JOptionPane.ERROR_MESSAGE);
-                    }
-            catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NoSuchPaddingException ex) {
-                Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+        } catch (StreamCorruptedException e) {
+            JOptionPane.showMessageDialog(null, "Wrong password!", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            catch (ClassNotFoundException ex) {
+        } catch (NoSuchPaddingException ex) {
+            Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalBlockSizeException ex) {
             Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (BadPaddingException ex) {
             Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
     }
-    
-    public void refreshClientListLName() {
-        if(clients.size()>0){
-        String[] array = new String[clients.size()];
-        for (int i = 0; i < array.length; i++) {
-            array[i] = clients.get(i).getLastname();
-        }
-        this.clientComboBox.setModel(new DefaultComboBoxModel(array));
-        index = this.clientComboBox.getSelectedIndex();
-        this.LoadInAllClientData(clients.get(index));
-        }
-    }
-    
+
+
+    //Bubble Sort to sort clients by first name
     public void sortClientsbyFirstName(ArrayList<Client> clients) {
         boolean flag = true;  // will determine when the sort is finished
         Client temp;
-
         while (flag) {
             flag = false;
             for (int i = 0; i < clients.size() - 1; i++) {
-                if (clients.get(i).getFirstname().compareToIgnoreCase(clients.get(i + 1).getFirstname()) > 0) {                                             // ascending sort
+                if (clients.get(i).getFirstname().compareToIgnoreCase(clients.get(i + 1).getFirstname()) > 0) {    // ascending sort
                     temp = clients.get(i);
                     clients.set(i, clients.get(i + 1));    // swapping
                     clients.set(i + 1, temp);
@@ -271,28 +273,26 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         while (flag) {
             flag = false;
             for (int i = 0; i < clients.size() - 1; i++) {
-                if (clients.get(i).getLastname().compareToIgnoreCase(clients.get(i + 1).getLastname()) > 0) {                                             // ascending sort
+                if (clients.get(i).getLastname().compareToIgnoreCase(clients.get(i + 1).getLastname()) > 0) {  // ascending sort
                     temp = clients.get(i);
-                    clients.set(i, clients.get(i + 1));    // swapping
+                    clients.set(i, clients.get(i + 1)); // swapping
                     clients.set(i + 1, temp);
                     flag = true;
                 }
             }
         }
     }
-    
+
 
     public PsychTrackerGUI() {
         initComponents();
         this.addWindowListener(new WindowAdapter() {
-            //I skipped unused callbacks for readability
-
             @Override
             public void windowClosing(WindowEvent e) {
                     setVisible(false);
                     if(username!=null && ciph!=null){
                         try {
-                            EncryptFile();
+                            EncryptFile(); //Encrypt the saved clients list onto the hard drive before exiting
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -1071,14 +1071,14 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         NotesTabLayout.setVerticalGroup(
             NotesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(NotesTabLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addGroup(NotesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(DateLabel)
                     .addComponent(EditNoteButton)
                     .addComponent(CreateNoteButton)
                     .addComponent(DoneNoteButton)
                     .addComponent(DoneEditNoteButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(NotesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(NotesTabLayout.createSequentialGroup()
@@ -1116,14 +1116,14 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     private void addClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientButtonActionPerformed
          ClientDialog cd = new ClientDialog(this,true);
          cd.setLocationRelativeTo(null);
-         Client temp = cd.getGoing();
+         Client temp = cd.getGoing(); //getGoing passes back the object created by the user in the dialog if there is one
        if(temp != null){
             clients.add(temp);
-            if(this.fnameradio.isSelected()){
+            if(this.fnameradio.isSelected()){ //if we need to sort by fname
                 this.sortClientsbyFirstName(clients);
                 this.refreshClientListFName();
             }
-            else{
+            else{ //if we need to sort by last name
                 this.sortClientsByLastName(clients);
                 this.refreshClientListLName();
             }
@@ -1140,30 +1140,26 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_usernamefieldsignupActionPerformed
 
     private void SignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpActionPerformed
-        if(this.usernamefieldsignup.getText().equals("") || this.passwordfieldsignup.getText().equals("") || this.passwordfieldsignupreenter.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Please fille out all fields.", "Error",JOptionPane.ERROR_MESSAGE);
-        }
-        else if(!this.passwordfieldsignup.getText().equals(this.passwordfieldsignupreenter.getText())){
-            JOptionPane.showMessageDialog(null, "Passwords do not match.", "Error",JOptionPane.ERROR_MESSAGE);
-        }
-        else{
+        if (this.usernamefieldsignup.getText().equals("") || this.passwordfieldsignup.getText().equals("") || this.passwordfieldsignupreenter.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Please fille out all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (!this.passwordfieldsignup.getText().equals(this.passwordfieldsignupreenter.getText())) {
+            JOptionPane.showMessageDialog(null, "Passwords do not match.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
             username = this.usernamefieldsignup.getText().toLowerCase();
             ciph = this.passwordfieldsignup.getText();
-            String path = System.getProperty("user.home") + File.separator + "Documents";
-            path += File.separator + "PsychTracker";
+            String path = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "PsychTracker";;
             File customDir = new File(path);
             path += File.separator + username + ".dat";
             File file = new File(path);
             if (customDir.exists() && file.exists()) {
-                    JOptionPane.showMessageDialog(null, "Looks like you already have an account!", "Error",JOptionPane.ERROR_MESSAGE);
-            }
-            else if(customDir.exists()){
+                JOptionPane.showMessageDialog(null, "Looks like you already have an account!", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (customDir.exists()) {
                 try {
                     this.EncryptFile();
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(null, "Created an account!", "Success",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Created an account!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 try {
                     this.DecrpytFile();
                 } catch (InvalidKeyException ex) {
@@ -1171,18 +1167,17 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                 }
                 this.SetUpNormalUserScenario();
                 this.refreshClientListFName();
-            }
-            else if (customDir.mkdirs()) {
+            } else if (customDir.mkdirs()) {
                 try {
                     this.EncryptFile();
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(null, "Created an account!", "Success",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Created an account!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 this.SetUpNormalUserScenario();
                 this.refreshClientListFName();
             } else {
-                JOptionPane.showMessageDialog(null, "Failed to use file system.", "Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Failed to use file system.", "Error", JOptionPane.ERROR_MESSAGE);
 
             }
         }
@@ -1199,38 +1194,34 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_fnameradioActionPerformed
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-        if(this.usernamefield.getText().equals("") || this.passwordfield.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Please fill out all fields first.", "Error",JOptionPane.ERROR_MESSAGE);
-        }
-        else{
+        if (this.usernamefield.getText().equals("") || this.passwordfield.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Please fill out all fields first.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
             username = this.usernamefield.getText().toLowerCase();
             ciph = this.passwordfield.getText();
-            String path = System.getProperty("user.home") + File.separator + "Documents";
-            path += File.separator + "PsychTracker" + File.separator + this.username + ".dat";
+            String path = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "PsychTracker" + File.separator + this.username + ".dat";
             File f = new File(path);
-            if(f.exists()){
-            try {
-                this.DecrpytFile();
-            } catch (InvalidKeyException ex) {
-                Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Could not find that username. Did you sign up?", "Error",JOptionPane.ERROR_MESSAGE);
+            if (f.exists()) { //if the file exists
+                try {
+                    this.DecrpytFile();
+                } catch (InvalidKeyException ex) {
+                    Logger.getLogger(PsychTrackerGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Could not find that username. Did you sign up?", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     private void CreateNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateNoteButtonActionPerformed
-        if(index != -1){
-        this.NoteTextArea.setText("Edit me!");
-        this.NoteTextArea.setEditable(true);
-        this.DoneNoteButton.setVisible(true);
-        this.CreateNoteButton.setEnabled(false);
-        this.EditNoteButton.setEnabled(false);
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Please select a client first.", "Error",JOptionPane.ERROR_MESSAGE);
+        if (index != -1) { //if there is a valid client selected
+            this.NoteTextArea.setText("Edit me!");
+            this.NoteTextArea.setEditable(true);
+            this.DoneNoteButton.setVisible(true);
+            this.CreateNoteButton.setEnabled(false);
+            this.EditNoteButton.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a client first.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_CreateNoteButtonActionPerformed
 
@@ -1239,7 +1230,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         this.currentNote = clients.size()-1;
         this.NoteTextArea.setEditable(false);
         this.DoneNoteButton.setVisible(false);
-        this.currentNote = clients.get(index).getNotes().size()-1;
+        this.currentNote = (clients.get(index).getNotes().size()-1);
         this.refreshNotes(clients.get(index));
         this.CreateNoteButton.setEnabled(true);
         this.EditNoteButton.setEnabled(true);
@@ -1247,11 +1238,12 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_DoneNoteButtonActionPerformed
 
     private void BackwardNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackwardNoteButtonActionPerformed
-        if (currentNote != 0) {
-            this.NoteTextArea.setText(this.clients.get(index).getNotes().get(currentNote-1).getNote());
-            int size = clients.get(index).getNotes().size();
-            this.DateLabel.setText((this.clients.get(index).getNotes().get(currentNote-1).getDate().getMonth()+1) +"/"+ this.clients.get(index).getNotes().get(currentNote-1).getDate().getDate()+"/"+(this.clients.get(index).getNotes().get(currentNote-1).getDate().getYear()+1900));
+        if (currentNote != 0 && clients.get(index).getNotes().size() > 0) {
             currentNote--;
+            Note note = this.clients.get(index).getNotes().get(currentNote);
+            this.NoteTextArea.setText(note.getNote());
+            int size = clients.get(index).getNotes().size();
+            this.DateLabel.setText((note.getDate().getMonth()+1) +"/"+ note.getDate().getDate()+"/"+(note.getDate().getYear()+1900));
         }
         else{
             JOptionPane.showMessageDialog(null, "There are no more notes to go back to.", "Woops!",JOptionPane.DEFAULT_OPTION);
@@ -1259,14 +1251,15 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_BackwardNoteButtonActionPerformed
 
     private void ForwardNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ForwardNoteButtonActionPerformed
-        if (currentNote != clients.get(index).getNotes().size()-1) {
-            this.NoteTextArea.setText(this.clients.get(index).getNotes().get(currentNote+1).getNote());
-            int size = clients.get(index).getNotes().size();
-             this.DateLabel.setText((this.clients.get(index).getNotes().get(currentNote+1).getDate().getMonth()+1) +"/"+ this.clients.get(index).getNotes().get(currentNote+1).getDate().getDate()+"/"+(this.clients.get(index).getNotes().get(currentNote+1).getDate().getYear()+1900));
+           int size = clients.get(index).getNotes().size();
+        if (currentNote != (size - 1) && size > 0) { //if not last note
             currentNote++;
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "There are no more notes.", "Woops!",JOptionPane.DEFAULT_OPTION);
+            Note note = this.clients.get(index).getNotes().get(currentNote);
+            this.NoteTextArea.setText(note.getNote());
+            this.DateLabel.setText((note.getDate().getMonth() + 1) + "/" + note.getDate().getDate() + "/" + (note.getDate().getYear() + 1900));
+
+        } else {
+            JOptionPane.showMessageDialog(null, "There are no more notes.", "Woops!", JOptionPane.DEFAULT_OPTION);
         }
     }//GEN-LAST:event_ForwardNoteButtonActionPerformed
 
@@ -1315,7 +1308,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
 
     private void donebuttonclientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_donebuttonclientActionPerformed
         if (this.fnamefield.getText().equals("") || this.lnamefield.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "First and Last Name cannot be blank", "Woops!",JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showMessageDialog(null, "First and Last Name cannot be blank", "Woops!", JOptionPane.DEFAULT_OPTION);
         } else {
             this.emailfield.setEditable(false);
             this.lnamefield.setEditable(false);
@@ -1326,39 +1319,40 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             clients.get(index).setEmail(emailfield.getText());
             clients.get(index).setFirstname(fnamefield.getText());
             clients.get(index).setLastname(lnamefield.getText());
-            if(!this.phonefield.getText().equals("")){
-                try{
-            clients.get(index).setPhonenumber(new BigInteger((phonefield.getText())));
+            if (!this.phonefield.getText().equals("")) {
+                try {
+                    clients.get(index).setPhonenumber(new BigInteger((phonefield.getText())));
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Phone number is not valid, saved everything but phone number.", "Woops!", JOptionPane.DEFAULT_OPTION);
+                }
             }
-            catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Phone number is not valid, saved everything but phone number.", "Woops!",JOptionPane.DEFAULT_OPTION);
-            }
-            }
-            
             this.FillinClientTab();
         }
     }//GEN-LAST:event_donebuttonclientActionPerformed
 
     private void EditNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditNoteButtonActionPerformed
+        if(index != -1 && clients.size()>0){
         this.CreateNoteButton.setEnabled(false);
         this.NoteTextArea.setEditable(true);
         this.EditNoteButton.setEnabled(false);
         this.DoneEditNoteButton.setVisible(true);
- 
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select a client first", "Woops!",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_EditNoteButtonActionPerformed
 
     private void DoneEditNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoneEditNoteButtonActionPerformed
-        if(this.NoteTextArea.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Note cannot be blank!", "Error",JOptionPane.ERROR_MESSAGE);
-        }
-        else{
-        clients.get(index).getNotes().get(currentNote).setNote(this.NoteTextArea.getText());
-        this.NoteTextArea.setEditable(false);
-        this.DoneEditNoteButton.setVisible(false);
-        this.EditNoteButton.setEnabled(true);
-        this.CreateNoteButton.setEnabled(true);
-        this.NoteTextArea.setText(this.clients.get(index).getNotes().get(currentNote).getNote());
-        JOptionPane.showMessageDialog(null, "Your note has been successfully saved.", "Success",JOptionPane.DEFAULT_OPTION);
+        if (this.NoteTextArea.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Note cannot be blank!", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            clients.get(index).getNotes().get(currentNote).setNote(this.NoteTextArea.getText());
+            this.NoteTextArea.setEditable(false);
+            this.DoneEditNoteButton.setVisible(false);
+            this.EditNoteButton.setEnabled(true);
+            this.CreateNoteButton.setEnabled(true);
+            this.NoteTextArea.setText(this.clients.get(index).getNotes().get(currentNote).getNote());
+            JOptionPane.showMessageDialog(null, "Your note has been successfully saved.", "Success", JOptionPane.DEFAULT_OPTION);
         }
     }//GEN-LAST:event_DoneEditNoteButtonActionPerformed
 
@@ -1367,18 +1361,17 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lnamefieldfigureActionPerformed
 
     private void editButtonfigureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonfigureActionPerformed
-        if(selectedFigure!= -1){
-        this.emailfieldfigure.setEditable(true);
-        this.lnamefieldfigure.setEditable(true);
-        this.ratingfieldfigure.setEditable(true);
-        this.fnamefieldfigure.setEditable(true);
-        this.phonefieldfigure.setEditable(true);
-        this.relationshipfigurefield.setEditable(true);
-        this.donebuttonclientfigure.setVisible(true);
-        this.figurenotetextarea.setEditable(true);
-        this.editButtonfigure.setEnabled(false);
-        }
-        else{
+        if (selectedFigure != -1) {
+            this.emailfieldfigure.setEditable(true);
+            this.lnamefieldfigure.setEditable(true);
+            this.ratingfieldfigure.setEditable(true);
+            this.fnamefieldfigure.setEditable(true);
+            this.phonefieldfigure.setEditable(true);
+            this.relationshipfigurefield.setEditable(true);
+            this.donebuttonclientfigure.setVisible(true);
+            this.figurenotetextarea.setEditable(true);
+            this.editButtonfigure.setEnabled(false);
+        } else {
             JOptionPane.showMessageDialog(null, "You did not select a figure.", "Woops!", JOptionPane.DEFAULT_OPTION);
         }
     }//GEN-LAST:event_editButtonfigureActionPerformed
@@ -1396,46 +1389,48 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             this.ratingfieldfigure.setEditable(false);
             this.figurenotetextarea.setEditable(false);
             this.relationshipfigurefield.setEditable(false);
-            clients.get(index).getFigures().get(selectedFigure).setEmail(emailfieldfigure.getText());
-            clients.get(index).getFigures().get(selectedFigure).setFirstname(fnamefieldfigure.getText());
-            clients.get(index).getFigures().get(selectedFigure).setLastname(lnamefieldfigure.getText());
-            clients.get(index).getFigures().get(selectedFigure).setRelationship(this.relationshipfigurefield.getText());
-            clients.get(index).getFigures().get(selectedFigure).setNote(this.figurenotetextarea.getText());
-            if(!this.phonefieldfigure.getText().equals("")){
-              try {
-                clients.get(index).getFigures().get(index).setPhonenumber(new BigInteger(phonefieldfigure.getText()));
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Phone number is not valid, saved everything but phone number.", "Woops!", JOptionPane.DEFAULT_OPTION);
-                this.phonefieldfigure.setText("");
-            }  
+            Figures temp = clients.get(index).getFigures().get(selectedFigure);
+            temp.setEmail(emailfieldfigure.getText());
+            temp.setFirstname(fnamefieldfigure.getText());
+            temp.setLastname(lnamefieldfigure.getText());
+            temp.setRelationship(this.relationshipfigurefield.getText());
+            temp.setNote(this.figurenotetextarea.getText());
+            clients.get(index).getFigures().set(selectedFigure, temp);
+            if (!this.phonefieldfigure.getText().equals("")) {
+                try {
+                    clients.get(index).getFigures().get(selectedFigure).setPhonenumber(new BigInteger(phonefieldfigure.getText()));
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Phone number is not valid, saved everything but phone number.", "Woops!", JOptionPane.DEFAULT_OPTION);
+                    this.phonefieldfigure.setText("");
+                }
             }
-            if(!this.ratingfieldfigure.getText().equals("")){
-            try {
-                clients.get(index).getFigures().get(selectedFigure).setRating((int)Long.parseLong(ratingfieldfigure.getText()));
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Rating is not valid, saved everything but rating.", "Woops!", JOptionPane.DEFAULT_OPTION);
-                this.ratingfieldfigure.setText("");
-            }
+            if (!this.ratingfieldfigure.getText().equals("")) {
+                try {
+                    clients.get(index).getFigures().get(selectedFigure).setRating((int) Long.parseLong(ratingfieldfigure.getText()));
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Rating is not valid, saved everything but rating.", "Woops!", JOptionPane.DEFAULT_OPTION);
+                    this.ratingfieldfigure.setText("");
+                }
             }
             this.FillinClientTab();
         }
     }//GEN-LAST:event_donebuttonclientfigureActionPerformed
 
     private void figurelistValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_figurelistValueChanged
-        if(clients.get(index).getFigures().size()>0){
-         selectedFigure = this.figurelist.getSelectedIndex();
-        this.FillinFigureTab();
+        if (clients.get(index).getFigures().size() > 0) {
+            selectedFigure = this.figurelist.getSelectedIndex();
+            this.FillinFigureTab();
         }
     }//GEN-LAST:event_figurelistValueChanged
 
     private void CreateFigureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateFigureButtonActionPerformed
-         FigureDialog fd = new FigureDialog(this,true);
-         fd.setLocationRelativeTo(null);
-         Figures temp = fd.getGoing();
-       if(temp != null){
-           clients.get(index).getFigures().add(temp);
-           this.refreshFigureList();
-       }
+        FigureDialog fd = new FigureDialog(this, true);
+        fd.setLocationRelativeTo(null);
+        Figures temp = fd.getGoing();
+        if (temp != null) {
+            clients.get(index).getFigures().add(temp);
+            this.refreshFigureList();
+        }
     }//GEN-LAST:event_CreateFigureButtonActionPerformed
 
     /**
@@ -1445,7 +1440,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
