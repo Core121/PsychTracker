@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -37,9 +38,11 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SealedObject;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -366,9 +369,8 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
 
         SortButtonGroup = new javax.swing.ButtonGroup();
         TopPanel = new javax.swing.JPanel();
-        LionStudyImage = new javax.swing.JLabel();
-        LionStudyText = new javax.swing.JLabel();
-        pennstatelogolabel = new javax.swing.JLabel();
+        PyschTrackerText = new javax.swing.JLabel();
+        coreAppsLogo = new javax.swing.JLabel();
         PsychTrackerTabs = new javax.swing.JTabbedPane();
         ClientTab = new javax.swing.JPanel();
         clientPanel = new javax.swing.JPanel();
@@ -446,20 +448,18 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PsychTracker");
-        setMaximumSize(null);
+        setMinimumSize(new java.awt.Dimension(1200, 600));
 
         TopPanel.setBackground(new java.awt.Color(6, 6, 50));
         TopPanel.setForeground(new java.awt.Color(255, 255, 255));
 
-        LionStudyImage.setBackground(new java.awt.Color(0, 0, 51));
+        PyschTrackerText.setFont(new java.awt.Font("Arabic Typesetting", 0, 48)); // NOI18N
+        PyschTrackerText.setForeground(new java.awt.Color(244, 244, 238));
+        PyschTrackerText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        PyschTrackerText.setText("PsychTracker");
+        PyschTrackerText.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        LionStudyText.setFont(new java.awt.Font("Arabic Typesetting", 0, 48)); // NOI18N
-        LionStudyText.setForeground(new java.awt.Color(244, 244, 238));
-        LionStudyText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LionStudyText.setText("PsychTracker");
-        LionStudyText.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        pennstatelogolabel.setForeground(new java.awt.Color(255, 255, 255));
+        coreAppsLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Res/smallLogo.png"))); // NOI18N
 
         javax.swing.GroupLayout TopPanelLayout = new javax.swing.GroupLayout(TopPanel);
         TopPanel.setLayout(TopPanelLayout);
@@ -467,20 +467,18 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             TopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TopPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(LionStudyText)
+                .addComponent(PyschTrackerText)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(LionStudyImage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pennstatelogolabel))
+                .addComponent(coreAppsLogo)
+                .addGap(18, 18, 18))
         );
         TopPanelLayout.setVerticalGroup(
             TopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LionStudyImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(PyschTrackerText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
             .addGroup(TopPanelLayout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(pennstatelogolabel, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(LionStudyText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
+                .addComponent(coreAppsLogo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         PsychTrackerTabs.setBackground(new java.awt.Color(0, 0, 0));
@@ -645,7 +643,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                                 .addComponent(editButton)
                                 .addGap(37, 37, 37)
                                 .addComponent(donebuttonclient)))))
-                .addContainerGap(944, Short.MAX_VALUE))
+                .addContainerGap(1762, Short.MAX_VALUE))
         );
         FiguresPanelLayout.setVerticalGroup(
             FiguresPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -672,7 +670,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                     .addComponent(donebuttonclient))
                 .addGap(30, 30, 30)
                 .addComponent(deleteClientButton)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         ClientTab.add(FiguresPanel, java.awt.BorderLayout.CENTER);
@@ -755,16 +753,16 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         LoginTabLayout.setHorizontalGroup(
             LoginTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginTabLayout.createSequentialGroup()
-                .addContainerGap(339, Short.MAX_VALUE)
+                .addContainerGap(750, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(343, Short.MAX_VALUE))
+                .addContainerGap(750, Short.MAX_VALUE))
         );
         LoginTabLayout.setVerticalGroup(
             LoginTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginTabLayout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         PsychTrackerTabs.addTab("Login", LoginTab);
@@ -864,21 +862,16 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         SignUpTab.setLayout(SignUpTabLayout);
         SignUpTabLayout.setHorizontalGroup(
             SignUpTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1284, Short.MAX_VALUE)
-            .addGroup(SignUpTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(SignUpTabLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(SignUpPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(SignUpTabLayout.createSequentialGroup()
+                .addGap(356, 356, 356)
+                .addComponent(SignUpPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(958, Short.MAX_VALUE))
         );
         SignUpTabLayout.setVerticalGroup(
             SignUpTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 572, Short.MAX_VALUE)
-            .addGroup(SignUpTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(SignUpTabLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(SignUpPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(SignUpTabLayout.createSequentialGroup()
+                .addComponent(SignUpPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         PsychTrackerTabs.addTab("Sign Up", SignUpTab);
@@ -1016,7 +1009,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                         .addGroup(FiguresTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(360, Short.MAX_VALUE))
+                .addContainerGap(1178, Short.MAX_VALUE))
         );
         FiguresTabLayout.setVerticalGroup(
             FiguresTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1065,7 +1058,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                     .addComponent(CreateFigureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
                 .addComponent(deletefigurebutton)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         PsychTrackerTabs.addTab("Figures", FiguresTab);
@@ -1146,9 +1139,9 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(DeleteNoteButton)))
                     .addGroup(NotesTabLayout.createSequentialGroup()
-                        .addGap(210, 210, 210)
+                        .addGap(239, 239, 239)
                         .addComponent(EditNoteButton)
-                        .addGap(18, 18, 18)
+                        .addGap(48, 48, 48)
                         .addComponent(DoneEditNoteButton)
                         .addGap(171, 171, 171)
                         .addComponent(DateLabel)
@@ -1156,7 +1149,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                         .addComponent(CreateNoteButton)
                         .addGap(18, 18, 18)
                         .addComponent(DoneNoteButton)))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(873, Short.MAX_VALUE))
         );
         NotesTabLayout.setVerticalGroup(
             NotesTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1190,13 +1183,15 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PsychTrackerTabs)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(TopPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(19, 19, 19))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(TopPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(PsychTrackerTabs)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1314,15 +1309,11 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     private void CreateNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateNoteButtonActionPerformed
-        if (index != -1) { //if there is a valid client selected
             this.NoteTextArea.setText("Edit me!");
             this.NoteTextArea.setEditable(true);
             this.DoneNoteButton.setVisible(true);
             this.CreateNoteButton.setEnabled(false);
             this.EditNoteButton.setEnabled(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Please select a client first.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }//GEN-LAST:event_CreateNoteButtonActionPerformed
 
     private void DoneNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoneNoteButtonActionPerformed
@@ -1406,9 +1397,9 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     private void EditNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditNoteButtonActionPerformed
         this.DeleteNoteButton.setEnabled(false);
         this.CreateNoteButton.setEnabled(false);
-            this.NoteTextArea.setEditable(true);
-            this.EditNoteButton.setEnabled(false);
-            this.DoneEditNoteButton.setVisible(true);
+        this.NoteTextArea.setEditable(true);
+        this.EditNoteButton.setEnabled(false);
+        this.DoneEditNoteButton.setVisible(true);
     }//GEN-LAST:event_EditNoteButtonActionPerformed
 
     private void DoneEditNoteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoneEditNoteButtonActionPerformed
@@ -1590,10 +1581,8 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     private javax.swing.JButton EditNoteButton;
     private javax.swing.JPanel FiguresPanel;
     private javax.swing.JPanel FiguresTab;
-    private javax.swing.JLabel LionStudyImage;
     private javax.swing.JLabel LionStudyLoginText;
     private javax.swing.JLabel LionStudySignUpLabel;
-    private javax.swing.JLabel LionStudyText;
     private javax.swing.JButton LoginButton;
     private javax.swing.JPanel LoginTab;
     private javax.swing.JTextArea NoteTextArea;
@@ -1601,6 +1590,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     private javax.swing.JPanel NotesTab;
     private javax.swing.JLabel PasswordText;
     private javax.swing.JTabbedPane PsychTrackerTabs;
+    private javax.swing.JLabel PyschTrackerText;
     private javax.swing.JButton SignUp;
     private javax.swing.JPanel SignUpPanel;
     private javax.swing.JPanel SignUpTab;
@@ -1611,6 +1601,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> clientComboBox;
     private javax.swing.JLabel clientLabel;
     private javax.swing.JPanel clientPanel;
+    private javax.swing.JLabel coreAppsLogo;
     private javax.swing.JButton deleteClientButton;
     private javax.swing.JButton deletefigurebutton;
     private javax.swing.JButton donebuttonclient;
@@ -1648,7 +1639,6 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     private javax.swing.JPasswordField passwordfield;
     private javax.swing.JPasswordField passwordfieldsignup;
     private javax.swing.JPasswordField passwordfieldsignupreenter;
-    private javax.swing.JLabel pennstatelogolabel;
     private javax.swing.JTextField phonefield;
     private javax.swing.JTextField phonefieldfigure;
     private javax.swing.JTextField ratingfieldfigure;
