@@ -37,6 +37,10 @@ public class Note implements Serializable {
     public Date getDate() {
         return date;
     }
+    
+    public String getRealDate(){
+        return (this.getDate().getMonth()+1)+"/"+this.getDate().getDate()+"/"+(this.getDate().getYear()+1900);
+    }
 
     public void setDate(Date date) {
         this.date = date;

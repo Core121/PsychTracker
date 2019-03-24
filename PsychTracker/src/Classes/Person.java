@@ -19,6 +19,13 @@ public abstract class Person implements Serializable {
     private BigInteger phonenumber;
     private String email;
 
+    public String getFirstAndLastName(){
+        return this.firstname + " " + this.lastname;
+    }
+    
+    public String getLastAndFirstName(){
+        return this.lastname + ", " + this.firstname;
+    }
     public String getFirstname() {
         return firstname;
     }

@@ -25,6 +25,8 @@ public class FigureDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form ClientDialog
+     * @param parent
+     * @param modal
      */
     public FigureDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -100,7 +102,10 @@ public class FigureDialog extends javax.swing.JDialog {
             }
         });
 
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         FigureNoteArea.setColumns(20);
+        FigureNoteArea.setLineWrap(true);
         FigureNoteArea.setRows(5);
         jScrollPane1.setViewportView(FigureNoteArea);
 
