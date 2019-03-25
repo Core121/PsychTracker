@@ -1363,11 +1363,13 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         this.emailfield.setEditable(true);
+        this.deleteClientButton.setEnabled(false);
         this.lnamefield.setEditable(true);
         this.fnamefield.setEditable(true);
         this.phonefield.setEditable(true);
         this.donebuttonclient.setVisible(true);
         this.editButton.setEnabled(false);
+        this.deleteClientButton.setEnabled(false);
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void donebuttonclientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_donebuttonclientActionPerformed
@@ -1380,6 +1382,8 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             this.phonefield.setEditable(false);
             this.donebuttonclient.setVisible(false);
             this.editButton.setEnabled(true);
+            this.deleteClientButton.setEnabled(true);
+            this.deleteClientButton.setEnabled(true);
             clients.get(index).setEmail(emailfield.getText());
             clients.get(index).setFirstname(fnamefield.getText());
             clients.get(index).setLastname(lnamefield.getText());
