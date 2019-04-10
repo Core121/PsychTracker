@@ -349,6 +349,8 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                 System.exit(0);
             }
         });
+        this.editButtonfigure.setEnabled(false);
+        this.deletefigurebutton.setEnabled(false);
         this.DoneNoteButton.setVisible(false);
         this.DoneEditNoteButton.setVisible(false);
         this.donebuttonclientfigure.setVisible(false);
@@ -370,7 +372,6 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         SortButtonGroup = new javax.swing.ButtonGroup();
         TopPanel = new javax.swing.JPanel();
         PyschTrackerText = new javax.swing.JLabel();
-        coreAppsLogo = new javax.swing.JLabel();
         PsychTrackerTabs = new javax.swing.JTabbedPane();
         ClientTab = new javax.swing.JPanel();
         clientPanel = new javax.swing.JPanel();
@@ -445,6 +446,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         NotesList = new javax.swing.JList();
         jLabel3 = new javax.swing.JLabel();
         DeleteNoteButton = new javax.swing.JButton();
+        coreAppsLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PsychTracker");
@@ -459,8 +461,6 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         PyschTrackerText.setText("PsychTracker");
         PyschTrackerText.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        coreAppsLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Res/smallLogo.png"))); // NOI18N
-
         javax.swing.GroupLayout TopPanelLayout = new javax.swing.GroupLayout(TopPanel);
         TopPanel.setLayout(TopPanelLayout);
         TopPanelLayout.setHorizontalGroup(
@@ -468,17 +468,11 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TopPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(PyschTrackerText)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(coreAppsLogo)
-                .addGap(18, 18, 18))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         TopPanelLayout.setVerticalGroup(
             TopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PyschTrackerText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-            .addGroup(TopPanelLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(coreAppsLogo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(PyschTrackerText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
         );
 
         PsychTrackerTabs.setBackground(new java.awt.Color(0, 0, 0));
@@ -670,7 +664,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                     .addComponent(donebuttonclient))
                 .addGap(30, 30, 30)
                 .addComponent(deleteClientButton)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         ClientTab.add(FiguresPanel, java.awt.BorderLayout.CENTER);
@@ -753,16 +747,16 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         LoginTabLayout.setHorizontalGroup(
             LoginTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginTabLayout.createSequentialGroup()
-                .addContainerGap(750, Short.MAX_VALUE)
+                .addContainerGap(736, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(750, Short.MAX_VALUE))
+                .addContainerGap(764, Short.MAX_VALUE))
         );
         LoginTabLayout.setVerticalGroup(
             LoginTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginTabLayout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(37, 37, 37)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         PsychTrackerTabs.addTab("Login", LoginTab);
@@ -855,7 +849,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                     .addComponent(passwordfieldsignupreenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addComponent(SignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout SignUpTabLayout = new javax.swing.GroupLayout(SignUpTab);
@@ -863,15 +857,16 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         SignUpTabLayout.setHorizontalGroup(
             SignUpTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SignUpTabLayout.createSequentialGroup()
-                .addGap(356, 356, 356)
+                .addContainerGap(651, Short.MAX_VALUE)
                 .addComponent(SignUpPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(958, Short.MAX_VALUE))
+                .addContainerGap(663, Short.MAX_VALUE))
         );
         SignUpTabLayout.setVerticalGroup(
             SignUpTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SignUpTabLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(SignUpPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 16, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         PsychTrackerTabs.addTab("Sign Up", SignUpTab);
@@ -1058,7 +1053,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                     .addComponent(CreateFigureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
                 .addComponent(deletefigurebutton)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         PsychTrackerTabs.addTab("Figures", FiguresTab);
@@ -1179,6 +1174,8 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
 
         PsychTrackerTabs.addTab("Notes", NotesTab);
 
+        coreAppsLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Res/smallLogo.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1192,12 +1189,18 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(PsychTrackerTabs)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(coreAppsLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(TopPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(coreAppsLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PsychTrackerTabs))
         );
@@ -1433,8 +1436,10 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             this.fnamefieldfigure.setEditable(true);
             this.phonefieldfigure.setEditable(true);
             this.relationshipfigurefield.setEditable(true);
+            this.CreateFigureButton.setEnabled(false);
             this.donebuttonclientfigure.setVisible(true);
             this.figurenotetextarea.setEditable(true);
+            this.deletefigurebutton.setEnabled(false);
             this.editButtonfigure.setEnabled(false);
     }//GEN-LAST:event_editButtonfigureActionPerformed
 
@@ -1445,6 +1450,8 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             this.emailfieldfigure.setEditable(false);
             this.lnamefieldfigure.setEditable(false);
             this.fnamefieldfigure.setEditable(false);
+            this.deletefigurebutton.setEnabled(true);
+            this.CreateFigureButton.setEnabled(true);
             this.phonefieldfigure.setEditable(false);
             this.donebuttonclientfigure.setVisible(false);
             this.editButtonfigure.setEnabled(true);
@@ -1482,7 +1489,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             selectedFigure = this.figurelist.getSelectedIndex();
         if (selectedFigure >= 0) {
             this.FillinFigureTab();
-            this.editButton.setEnabled(true);
+            this.editButtonfigure.setEnabled(true);
             this.deletefigurebutton.setEnabled(true);
         }
     }//GEN-LAST:event_figurelistValueChanged
