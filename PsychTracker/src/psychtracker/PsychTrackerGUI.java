@@ -1373,6 +1373,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
         this.donebuttonclient.setVisible(true);
         this.editButton.setEnabled(false);
         this.deleteClientButton.setEnabled(false);
+        this.addClientButton.setEnabled(false);
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void donebuttonclientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_donebuttonclientActionPerformed
@@ -1430,7 +1431,8 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lnamefieldfigureActionPerformed
 
     private void editButtonfigureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonfigureActionPerformed
-            this.emailfieldfigure.setEditable(true);
+        if(this.figurelist.getSelectedIndex() != -1) {   
+        this.emailfieldfigure.setEditable(true);
             this.lnamefieldfigure.setEditable(true);
             this.ratingfieldfigure.setEditable(true);
             this.fnamefieldfigure.setEditable(true);
@@ -1441,6 +1443,10 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             this.figurenotetextarea.setEditable(true);
             this.deletefigurebutton.setEnabled(false);
             this.editButtonfigure.setEnabled(false);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please select a figure.", "Woops!", JOptionPane.DEFAULT_OPTION);
+        }
     }//GEN-LAST:event_editButtonfigureActionPerformed
 
     private void donebuttonclientfigureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_donebuttonclientfigureActionPerformed
@@ -1530,10 +1536,14 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteClientButtonActionPerformed
 
     private void deletefigurebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletefigurebuttonActionPerformed
-        int reply = JOptionPane.showConfirmDialog(null, "Are you sure you'd like to delete " + clients.get(index).getFigures().get(selectedFigure).getFirstAndLastName() +"?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) {
-            clients.get(index).getFigures().remove(selectedFigure);
-            this.refreshFigureList();
+        if (this.figurelist.getSelectedIndex() != -1) {
+            int reply = JOptionPane.showConfirmDialog(null, "Are you sure you'd like to delete " + clients.get(index).getFigures().get(selectedFigure).getFirstAndLastName() + "?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                clients.get(index).getFigures().remove(selectedFigure);
+                this.refreshFigureList();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a figure.", "Woops!", JOptionPane.DEFAULT_OPTION);
         }
     }//GEN-LAST:event_deletefigurebuttonActionPerformed
 
