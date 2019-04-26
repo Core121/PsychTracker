@@ -1386,6 +1386,7 @@ public class PsychTrackerGUI extends javax.swing.JFrame {
             this.phonefield.setEditable(false);
             this.donebuttonclient.setVisible(false);
             this.editButton.setEnabled(true);
+            this.addClientButton.setEnabled(true);
             this.deleteClientButton.setEnabled(true);
             this.deleteClientButton.setEnabled(true);
             clients.get(index).setEmail(emailfield.getText());
